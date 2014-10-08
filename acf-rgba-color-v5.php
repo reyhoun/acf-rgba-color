@@ -122,17 +122,18 @@ class acf_field_rgba_color extends acf_field {
 		  // add empty value (allows '' to be selected)
         if( empty($field['value']) ){
 
-            $field['value']['hex'] 		= '';
+            $field['value']['he-op']['hex'] 	= '#2b42d6';
+            $field['value']['he-op']['opacity'] = 1;
             if ($field['rgba']) {
             	$field['value']['rgba']		= $field['rgba'];
             } else {
-            	$field['value']['rgba']		= 'rgba(252, 93, 98, 1)';
+            	$field['value']['rgba']		= 'rgba(43, 66, 214, 1)';
             }
             
         }
 		
 		// echo '<pre>';
-		// 	print_r( $field );
+		// 	print_r( $field['value']);
 		// echo '</pre>';
 		
 		
@@ -142,10 +143,13 @@ class acf_field_rgba_color extends acf_field {
 		
 		echo '<div class="">';
 			echo '	<div class="toping">
-						<input name="' . $field['name'] . '[hex]" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['value']['hex'] . '">
+						<input name="' . $field['name'] . '[he-op][hex]" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['value']['he-op']['hex'] . '" data-opacity="' . $field['value']['he-op']['opacity'] . '">
+						<input name="' . $field['name'] . '[he-op][opacity]" type="hidden" id="' . $field['key'] . '-opacity" value="' . $field['value']['he-op']['opacity'] . '">
                 		<input name="' . $field['name'] . '[rgba]" readonly id="' . $field['key'] . '-rgbatext" value="' . $field['value']['rgba'] . '">
                  	</div>';
 		echo '</div>';
+
+
 
 		
         echo "<script>
@@ -154,14 +158,16 @@ class acf_field_rgba_color extends acf_field {
     			$(this).minicolors({
     			  defaultValue: '#ff6167',
     			  inline: false,
+    			  // data-opacity: $('#" . $field['key'] . "-opacity').val(),
     			  opacity: true,
     			  change: function(hex, opacity) {
     			    if(!hex) return;
     			    text = hex ? hex : 'transparent';
     			    if( opacity ) text += ', ' + opacity;
-    			    	// $(this).val(text);
     				    text = jQuery(this).minicolors('rgbaString');
     				    $('#" . $field['key'] . "-rgbatext').val(text);
+    				    $('#" . $field['key'] . "-opacity').val(opacity);
+
     				    // $(this).select();
     				  },
     				});
