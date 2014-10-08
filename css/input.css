@@ -244,11 +244,19 @@
     padding-left: 12px;
 }
 
-.rgba {
-    background-color: gray;
-    padding: 12px;
-    width: 265px;
-    height: 190px;
+.rgbatext {
+    background-color: transparent !important;
+    border: 1px solid #000 !important;
+    text-align: center;
+    /*margin: 0;*/
+    padding: 0;
+    margin-left: -3px;
+    /*margin-top: 6px;*/
+
+}
+
+.rgba{
+    margin-bottom: 3px;
 }
 
 .toping{

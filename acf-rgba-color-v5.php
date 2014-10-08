@@ -125,7 +125,7 @@ class acf_field_rgba_color extends acf_field {
             
             if ($field['rgba']) {
 
-            	$rgba = sscanf($field['value']['rgba'], "rgba(%d, %d, %d, %f)");
+            	$rgba = sscanf($field['rgba'], "rgba(%d, %d, %d, %f)");
 
             	$hex = "#";
 				$hex.= str_pad(dechex($rgba[0]), 2, "0", STR_PAD_LEFT);
@@ -158,7 +158,7 @@ class acf_field_rgba_color extends acf_field {
 			echo '	<div class="toping">
 						<input name="' . $field['name'] . '[he-op][hex]" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['value']['he-op']['hex'] . '" data-opacity="' . $field['value']['he-op']['opacity'] . '">
 						<input name="' . $field['name'] . '[he-op][opacity]" type="hidden" id="' . $field['key'] . '-opacity" value="' . $field['value']['he-op']['opacity'] . '">
-                		<input name="' . $field['name'] . '[rgba]" readonly id="' . $field['key'] . '-rgbatext" value="' . $field['value']['rgba'] . '">
+                		<input name="' . $field['name'] . '[rgba]" readonly id="' . $field['key'] . '-rgbatext" value="' . $field['value']['rgba'] . '" class="rgbatext">
                  	</div>';
 		echo '</div>';
 
