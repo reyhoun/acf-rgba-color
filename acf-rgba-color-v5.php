@@ -117,16 +117,29 @@ class acf_field_rgba_color extends acf_field {
 	*/
 	
 	function render_field( $field ) {
-		
+ 		
 		
 		  // add empty value (allows '' to be selected)
         if( empty($field['value']) ){
 
-            $field['value']['he-op']['hex'] 	= '#2b42d6';
-            $field['value']['he-op']['opacity'] = 1;
+            
             if ($field['rgba']) {
+
+            	$rgba = sscanf($field['value']['rgba'], "rgba(%d, %d, %d, %f)");
+
+            	$hex = "#";
+				$hex.= str_pad(dechex($rgba[0]), 2, "0", STR_PAD_LEFT);
+				$hex.= str_pad(dechex($rgba[1]), 2, "0", STR_PAD_LEFT);
+				$hex.= str_pad(dechex($rgba[2]), 2, "0", STR_PAD_LEFT);
+
+
+
+            	$field['value']['he-op']['hex'] 	= $hex;
+            	$field['value']['he-op']['opacity'] = $rgba[3];
             	$field['value']['rgba']		= $field['rgba'];
             } else {
+            	$field['value']['he-op']['hex'] 	= '#2b42d6';
+            	$field['value']['he-op']['opacity'] = 1;
             	$field['value']['rgba']		= 'rgba(43, 66, 214, 1)';
             }
             
@@ -154,6 +167,8 @@ class acf_field_rgba_color extends acf_field {
 		
         echo "<script>
         	(function($){
+
+        	
         		var colpick = $('.rgba').each( function() {
     			$(this).minicolors({
     			  defaultValue: '#ff6167',
