@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Advanced Custom Fields: RGBA Color
-Plugin URI: PLUGIN_URL
-Description: DESCRIPTION
+Plugin URI: https://github.com/reyhoun/acf-rgba-color
+Description: RGBA Color field type for advanced custom field plugin.
 Version: 1.0.0
-Author: AUTHOR_NAME
-Author URI: AUTHOR_URL
+Author: Reyhoun
+Author URI: http://reyhoun.com/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -32,18 +32,5 @@ function include_field_types_rgba_color( $version ) {
 add_action('acf/include_field_types', 'include_field_types_rgba_color');	
 
 
-
-
-// 3. Include field type for ACF4
-function register_fields_rgba_color() {
-	
-	include_once('acf-rgba_color-v4.php');
-	
-}
-
 add_action('acf/register_fields', 'register_fields_rgba_color');	
-
-
-
-	
 ?>
