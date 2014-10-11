@@ -245,14 +245,17 @@
 }
 
 .rgbatext {
-    background-color: transparent !important;
-    border: 1px solid #000 !important;
+    background: #f7f7f7 !important;
+    border: 1px solid #ccc !important;
+    color: #555;
+    box-shadow: inset 0 1px 0 #fff;
     text-align: center;
-    /*margin: 0;*/
     padding: 0;
-    margin-left: -3px;
-    /*margin-top: 6px;*/
-
+    margin: 0 0 0 -3px;
+    font-size: 11px;
+    padding: 2px;
+    text-transform: uppercase;
+    vertical-align: top;
 }
 
 .rgba{
