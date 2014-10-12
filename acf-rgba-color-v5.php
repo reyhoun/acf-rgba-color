@@ -44,7 +44,9 @@ class acf_field_rgba_color extends acf_field {
 		*/
 		
 		$this->defaults = array(
-			'rgba'	=> '',
+			'rgba'			=>'',
+			'return_value'	=> 0,
+			'ext_value'		=> array(),
 		);
 		
 		
@@ -91,11 +93,22 @@ class acf_field_rgba_color extends acf_field {
 		
 		acf_render_field_setting( $field, array(
 			'label'			=> __('RGBA color','acf-rgba_color'),
-			'instructions'	=> __('','acf-rgba_color'),
+			'instructions'	=> __('Following this methods for default value: rgba(red, green, blue, alpha)','acf-rgba_color'),
 			'type'			=> 'text',
 			'name'			=> 'rgba',
 			
 		));
+
+		acf_render_field_setting( $field, array(
+            'label'         => __('return value ','acf-rgba_color'),
+            'type'          => 'radio',
+            'name'          => 'return_value',
+            'layout'  =>  'horizontal',
+            'choices' =>  array(
+                1 => __('hex and opacity', 'return_value'),
+                0 => __('css rgba', 'return_value'),
+            )
+        ));
 
 	}
 	
@@ -119,46 +132,109 @@ class acf_field_rgba_color extends acf_field {
 	function render_field( $field ) {
  		
 		
-		  // add empty value (allows '' to be selected)
+		 // add empty value (allows '' to be selected)
         if( empty($field['value']) ){
 
             
             if ($field['rgba']) {
 
-            	$rgba = sscanf($field['rgba'], "rgba(%d, %d, %d, %f)");
+            	if ($field['return_value']) {
+            		$rgba = sscanf($field['rgba'], "rgba(%d, %d, %d, %f)");
 
-            	$hex = "#";
-				$hex.= str_pad(dechex($rgba[0]), 2, "0", STR_PAD_LEFT);
-				$hex.= str_pad(dechex($rgba[1]), 2, "0", STR_PAD_LEFT);
-				$hex.= str_pad(dechex($rgba[2]), 2, "0", STR_PAD_LEFT);
+            		$hex = "#";
+					$hex.= str_pad(dechex($rgba[0]), 2, "0", STR_PAD_LEFT);
+					$hex.= str_pad(dechex($rgba[1]), 2, "0", STR_PAD_LEFT);
+					$hex.= str_pad(dechex($rgba[2]), 2, "0", STR_PAD_LEFT);
 
+					$field['value']['hex'] 	= $hex;
+            		$field['value']['opacity'] = $rgba[3];
+            	} else{
 
+               		$field['value']	= $field['rgba'];
+            	}
 
-            	$field['value']['he-op']['hex'] 	= $hex;
-            	$field['value']['he-op']['opacity'] = $rgba[3];
-            	$field['value']['rgba']		= $field['rgba'];
             } else {
-            	$field['value']['he-op']['hex'] 	= '#2b42d6';
-            	$field['value']['he-op']['opacity'] = 1;
-            	$field['value']['rgba']		= 'rgba(43, 66, 214, 1)';
+            	if ($field['return_value']) {
+            		$field['value']['hex'] 	= '#2b42d6';
+            		$field['value']['opacity'] = 0;
+            	} else{
+            		$field['value']	= '';
+            	}
             }
             
         }
+
+
+
+    		if( empty($field['value']) ){
+
+    			$field['ext_value']['he-op']['hex'] 	= '#000000';
+            	$field['ext_value']['he-op']['opacity'] = '0';
+            	
+            	$field['ext_value']['rgba']		= '';
+
+    		} else {
+            	if( empty($field['value']['hex']) ){
+
+            		$rgba = sscanf($field['value'], "rgba(%d, %d, %d, %f)");
+
+            		$hex = "#";
+					$hex.= str_pad(dechex($rgba[0]), 2, "0", STR_PAD_LEFT);
+					$hex.= str_pad(dechex($rgba[1]), 2, "0", STR_PAD_LEFT);
+					$hex.= str_pad(dechex($rgba[2]), 2, "0", STR_PAD_LEFT);
+
+            		$field['ext_value']['he-op']['hex'] 	= $hex;
+            		$field['ext_value']['he-op']['opacity'] = $rgba[3];
+            	
+            		$field['ext_value']['rgba']		= $field['value'];
+            	} else {
+
+            		$field['ext_value']['he-op']['hex'] 	= $field['value']['hex'];
+            		$field['ext_value']['he-op']['opacity'] = $field['value']['opacity'];
+
+
+            		$hex = preg_replace("/#/", "", $field['value']['hex']);
+					$color = array();
+ 
+					if(strlen($hex) == 3) {
+						$color['r'] = hexdec(substr($hex, 0, 1) . $r);
+						$color['g'] = hexdec(substr($hex, 1, 1) . $g);
+						$color['b'] = hexdec(substr($hex, 2, 1) . $b);
+					}
+					else if(strlen($hex) == 6) {
+						$color['r'] = hexdec(substr($hex, 0, 2));
+						$color['g'] = hexdec(substr($hex, 2, 2));
+						$color['b'] = hexdec(substr($hex, 4, 2));
+					}
+            	
+            		$field['ext_value']['rgba']		= 'rgba(' . $color['r'] . ',' . $color['g'] . ',' . $color['b'] . ',' . $field['value']['opacity'] . ')';
+
+            	}
+            }
 		
 		// echo '<pre>';
-		// 	print_r( $field['value']);
+		// 	print_r( $field);
 		// echo '</pre>';
 		
 		
-		/*
-		*  Create a simple text input using the 'font_size' setting.
-		*/
+		if ($field['return_value']) {
+			$hexname 	 =  $field['name'] . '[hex]';
+			$opacityname =  $field['name'] . '[opacity]';
+			$rgbatext	 = '';
+		} else {
+			$hexname 	 =  '';
+			$opacityname =  '';
+			$rgbatext	 = $field['name'];
+		}
+		
+
+		
 		
 		echo '<div class="">';
 			echo '	<div class="toping">
-						<input name="' . $field['name'] . '[he-op][hex]" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['value']['he-op']['hex'] . '" data-opacity="' . $field['value']['he-op']['opacity'] . '">
-						<input name="' . $field['name'] . '[he-op][opacity]" type="hidden" id="' . $field['key'] . '-opacity" value="' . $field['value']['he-op']['opacity'] . '">
-                		<input name="' . $field['name'] . '[rgba]" readonly id="' . $field['key'] . '-rgbatext" value="' . $field['value']['rgba'] . '" class="rgbatext">
+						<input name="' . $hexname . '" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['ext_value']['he-op']['hex'] . '" data-opacity="' . $field['ext_value']['he-op']['opacity'] . '">
+						<input name="' . $opacityname . '" type="hidden" id="' . $field['key'] . '-opacity" value="' . $field['ext_value']['he-op']['opacity'] . '">
+                		<input name="' . $rgbatext . '" readonly id="' . $field['key'] . '-rgbatext" value="' . $field['ext_value']['rgba'] . '" class="rgbatext">
                  	</div>';
 		echo '</div>';
 

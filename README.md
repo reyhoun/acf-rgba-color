@@ -26,5 +26,8 @@ This ACF field type is compatible with:
 
 ### Changelog
 
-##### 1.0.0
+## 1.1.0
+* Add: choices return value.
+
+## 1.0.0
 * Initial Release.
