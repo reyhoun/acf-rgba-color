@@ -1,14 +1,16 @@
 <?php
 
 /*
-Plugin Name: Advanced Custom Fields: RGBA Color
-Plugin URI: https://github.com/reyhoun/acf-rgba-color
-Description: RGBA Color field type for advanced custom field plugin.
-Version: 1.1.0
-Author: Reyhoun
-Author URI: http://reyhoun.com/
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Plugin Name: Advanced Custom Fields: RGBA Color
+ * Plugin URI: https://github.com/reyhoun/acf-rgba-color
+ * Description: RGBA Color field type for advanced custom field plugin.
+ * Version: 1.2.0
+ * Author: Reyhoun
+ * Author URI: http://reyhoun.com/
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * GitHub Plugin URI: https://github.com/reyhoun/acf-rgba-color
+ * GitHub Branch:     master
 */
 
 
