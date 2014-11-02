@@ -221,10 +221,13 @@ class acf_field_rgba_color extends acf_field {
 			$hexname 	 =  $field['name'] . '[hex]';
 			$opacityname =  $field['name'] . '[opacity]';
 			$rgbatext	 = '';
+			$readonly	 = 'readonly';
 		} else {
 			$hexname 	 =  '';
 			$opacityname =  '';
 			$rgbatext	 = $field['name'];
+			$readonly	 = '';
+
 		}
 		
 
@@ -234,7 +237,7 @@ class acf_field_rgba_color extends acf_field {
 			echo '	<div class="toping">
 						<input name="' . $hexname . '" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['ext_value']['he-op']['hex'] . '" data-opacity="' . $field['ext_value']['he-op']['opacity'] . '">
 						<input name="' . $opacityname . '" type="hidden" id="' . $field['key'] . '-opacity" value="' . $field['ext_value']['he-op']['opacity'] . '">
-                		<input name="' . $rgbatext . '" readonly id="' . $field['key'] . '-rgbatext" value="' . $field['ext_value']['rgba'] . '" class="rgbatext">
+                		<input name="' . $rgbatext . '" ' . $readonly . ' id="' . $field['key'] . '-rgbatext" value="' . $field['ext_value']['rgba'] . '" class="rgbatext">
                  	</div>';
 		echo '</div>';
 
@@ -547,30 +550,44 @@ class acf_field_rgba_color extends acf_field {
 	*  @return	$valid
 	*/
 	
-	/*
+	
 	
 	function validate_value( $valid, $value, $field, $input ){
 		
-		// Basic usage
-		if( $value < $field['custom_minimum_setting'] )
-		{
-			$valid = false;
+			    if ($field['required']) {
+	    
+		    	$set = 0;
+		    	$txt = __('The value is empty!! : ','acf-rgba_color');
+
+		    	if ($field['return_value']) {
+		    		if( empty($value['hex'])){
+		    			$txt .= __('hex, ','acf-rgba_color');
+		    			$set = 1;
+		    		}
+
+		    		if( empty($value['opacity'])){
+		    			$txt .= __('opacity, ','acf-rgba_color');
+		    			$set = 1;
+		    		}
+
+		    	} else {
+		    		if( empty($value)){
+		    			$txt .= __('rgba, ','acf-rgba_color');
+		    			$set = 1;
+		    		}
+		    	}
+		    
+		    	if ($set) {
+		    		$valid = $txt;
+		    	}
+		    	
 		}
-		
-		
-		// Advanced usage
-		if( $value < $field['custom_minimum_setting'] )
-		{
-			$valid = __('The value is too little!','acf-rgba_color'),
-		}
-		
-		
-		// return
-		return $valid;
+
+	    return $valid;
 		
 	}
 	
-	*/
+	
 	
 	
 	/*
@@ -672,7 +689,6 @@ class acf_field_rgba_color extends acf_field {
 	
 	
 }
-
 
 // create field
 new acf_field_rgba_color();
