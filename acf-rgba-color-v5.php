@@ -18,54 +18,55 @@ class acf_field_rgba_color extends acf_field {
 	
 	function __construct() {
 		
+
 		/*
 		*  name (string) Single word, no spaces. Underscores allowed
 		*/
-		
+
 		$this->name = 'rgba_color';
-		
-		
+
+
 		/*
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
-		
+
 		$this->label = __('RGBA Color', 'acf-rgba_color');
-		
-		
+
+
 		/*
 		*  category (string) basic | content | choice | relational | jquery | layout | CUSTOM GROUP NAME
 		*/
-		
+
 		$this->category = 'choice';
-		
-		
+
+
 		/*
 		*  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
 		*/
-		
+
 		$this->defaults = array(
 			'rgba'			=>'',
 			'return_value'	=> 0,
 			'ext_value'		=> array(),
 		);
-		
-		
+
+
 		/*
 		*  l10n (array) Array of strings that are used in JavaScript. This allows JS strings to be translated in PHP and loaded via:
 		*  var message = acf._e('rgba_color', 'error');
 		*/
-		
+
 		$this->l10n = array(
 			'error'	=> __('Error! Please enter a higher value', 'acf-rgba_color'),
 		);
-		
-				
+
+
 		// do not delete!
     	parent::__construct();
-    	
+
 	}
-	
-	
+
+
 	/*
 	*  render_field_settings()
 	*
@@ -78,9 +79,9 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$field (array) the $field being edited
 	*  @return	n/a
 	*/
-	
+
 	function render_field_settings( $field ) {
-		
+
 		/*
 		*  acf_render_field_setting
 		*
@@ -90,13 +91,13 @@ class acf_field_rgba_color extends acf_field {
 		*  More than one setting can be added by copy/paste the above code.
 		*  Please note that you must also have a matching $defaults value for the field name (font_size)
 		*/
-		
+
 		acf_render_field_setting( $field, array(
 			'label'			=> __('RGBA color','acf-rgba_color'),
 			'instructions'	=> __('Following this methods for default value: rgba(red, green, blue, alpha)','acf-rgba_color'),
 			'type'			=> 'text',
 			'name'			=> 'rgba',
-			
+
 		));
 
 		acf_render_field_setting( $field, array(
@@ -111,9 +112,9 @@ class acf_field_rgba_color extends acf_field {
         ));
 
 	}
-	
-	
-	
+
+
+
 	/*
 	*  render_field()
 	*
@@ -128,14 +129,14 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$field (array) the $field being edited
 	*  @return	n/a
 	*/
-	
+
 	function render_field( $field ) {
- 		
-		
+
+
 		 // add empty value (allows '' to be selected)
         if( empty($field['value']) ){
 
-            
+
             if ($field['rgba']) {
 
             	if ($field['return_value']) {
@@ -161,7 +162,7 @@ class acf_field_rgba_color extends acf_field {
             		$field['value']	= '';
             	}
             }
-            
+
         }
 
 
@@ -170,7 +171,7 @@ class acf_field_rgba_color extends acf_field {
 
     			$field['ext_value']['he-op']['hex'] 	= '#000000';
             	$field['ext_value']['he-op']['opacity'] = '0';
-            	
+
             	$field['ext_value']['rgba']		= '';
 
     		} else {
@@ -185,7 +186,7 @@ class acf_field_rgba_color extends acf_field {
 
             		$field['ext_value']['he-op']['hex'] 	= $hex;
             		$field['ext_value']['he-op']['opacity'] = $rgba[3];
-            	
+
             		$field['ext_value']['rgba']		= $field['value'];
             	} else {
 
@@ -195,7 +196,7 @@ class acf_field_rgba_color extends acf_field {
 
             		$hex = preg_replace("/#/", "", $field['value']['hex']);
 					$color = array();
- 
+
 					if(strlen($hex) == 3) {
 						$color['r'] = hexdec(substr($hex, 0, 1) . $r);
 						$color['g'] = hexdec(substr($hex, 1, 1) . $g);
@@ -229,25 +230,27 @@ class acf_field_rgba_color extends acf_field {
 			$readonly	 = '';
 
 		}
-		
 
-		
-		
+
+// @jgraup:         Adding Clear button.
+
+
 		echo '<div class="">';
 			echo '	<div class="toping">
 						<input name="' . $hexname . '" type="hidden" id="' . $field['key'] . '-rgba" class="form-control rgba" data-inline="true" value="' . $field['ext_value']['he-op']['hex'] . '" data-opacity="' . $field['ext_value']['he-op']['opacity'] . '">
 						<input name="' . $opacityname . '" type="hidden" id="' . $field['key'] . '-opacity" value="' . $field['ext_value']['he-op']['opacity'] . '">
                 		<input name="' . $rgbatext . '" ' . $readonly . ' id="' . $field['key'] . '-rgbatext" value="' . $field['ext_value']['rgba'] . '" class="rgbatext">
+                		<input type="submit" value="Clear" id="' . $field['key'] . '-clear">
                  	</div>';
 		echo '</div>';
 
 
 
-		
+
         echo "<script>
         	(function($){
 
-        	
+
         		var colpick = $('.rgba').each( function() {
     			$(this).minicolors({
     			  defaultValue: '#ff6167',
@@ -263,15 +266,124 @@ class acf_field_rgba_color extends acf_field {
     				    $('#" . $field['key'] . "-opacity').val(opacity);
 
     				    // $(this).select();
-    				  },
+    				  }
     				});
 				   });
+
+
+// @jgraup:         Adding multiple methods for changing color and opacity with the keyboard.
+
+                    var target = $('#" . $field['key'] . "-rgba.rgba'),
+                    rgbatext = $('#" . $field['key'] . "-rgbatext'),
+                    opacity = $('#" . $field['key'] . "-opacity'),
+
+                    // ~ Trigger with 'Enter' or 'Paste' from Clipboard into rgba textfield.
+                    //
+                    // + NUMBER will set opacity. ex: (0-1 or 1-100)
+                    // + HEX will set color
+                    // + RGBA(r,g,b,a) will set color and opacity
+                    // + RGB(r,g,b) will set color, opacity is set to 1
+                    //
+                    // User value must be formatted;
+                    //
+                    // num:    .4
+                    // num:    99
+                    // hex:    #BADA55
+                    // rgba:   rgba(0,111,222,.5) or (0,111,222,.5)
+                    // rgb:    rgb(0,111,222) or (0,111,222)
+
+                    parseUserInput = function(evt){
+                        var val = rgbatext.val();
+                        if(val === '' || val == undefined)
+                            return; // no joy
+
+
+
+                        if(val.indexOf('#')>-1){
+                            // hex
+                            target.minicolors('value', val);
+                        } else if(val.indexOf('(')>-1){
+                            // rgba / rgb
+                            var _1 = val.indexOf('(')+1,
+                                _2 = val.indexOf(')'),
+                                str = val.slice (_1, _2),
+                                vals = str.split(' ').join('').split(',');
+
+                            if(vals.length < 3)
+                                return; // no joy
+
+                            // rgb acts like hex except alpha turns to 1
+                            var a = vals.length == 4 ? vals[3] : 1,
+                                // r = vals[0],
+                                // g = vals[1],
+                                // b = vals[2],
+                                hex = '#' +
+                                ('0' + parseInt(vals[0],10).toString(16)).slice(-2) +
+                                ('0' + parseInt(vals[1],10).toString(16)).slice(-2) +
+                                ('0' + parseInt(vals[2],10).toString(16)).slice(-2);
+
+                            target.minicolors('value', hex);
+                            target.minicolors('opacity', a);
+                        }
+                        else {
+                            // opacity?
+                            var float = parseFloat(val);
+                            if(!isNaN(float)){
+                                if(float<0){
+                                    // less than 1? sorry.
+                                    float = 0;
+                                }
+                                else if(float>1){
+                                    // greater than 1, then assume 1-100
+                                    float/=100;
+                                }
+                                if(float>1){
+                                    // greater than 1... still? denied.
+                                    float = 1;
+                                }
+
+                                target.minicolors('opacity', float);
+                            }
+                        }
+                    }
+
+                    // Clear (Clear Button)
+                    $('#" . $field['key'] . "-clear').bind('click', function(evt){
+                        // don't submit the form just yet...
+                        evt.preventDefault();
+
+                        // swatch retains the color value temporarily,
+                        // but let's make it look clear either way.
+                        target.minicolors('opacity', '0');
+
+                        // this is the data that is saved
+                        rgbatext.val('');
+                        opacity.val('');
+                    });
+
+                    // Enter (Keyboard Input)
+                    rgbatext.on('keypress', function (evt) {
+                        // on 'Enter'
+                        if(evt.which == 13) {
+                            evt.preventDefault();
+                            parseUserInput(evt); // magic!
+                        }
+                    });
+
+                    // Paste  (Keyboard Input)
+                    rgbatext.on('paste', function (evt) {
+                        // wait for the text after the event
+                        setTimeout(function () {
+                            parseUserInput(evt); // magic!
+                        }, 60);
+                    });
+				   
 				})(jQuery);
         	  </script>";
 
 	}
-	
-		
+
+
 	/*
 	*  input_admin_enqueue_scripts()
 	*
@@ -286,32 +398,32 @@ class acf_field_rgba_color extends acf_field {
 	*  @return	n/a
 	*/
 
-	
-	
+
+
 	function input_admin_enqueue_scripts() {
-		
+
 		$dir = plugin_dir_url( __FILE__ );
-		
-		
+
+
 		// register & include JS
 		wp_register_script( 'acf-input-rgba_minicolors', "{$dir}js/jquery.minicolors.min.js" );
 		wp_enqueue_script('acf-input-rgba_minicolors');
 
 		wp_register_script( 'acf-input-rgba_color', "{$dir}js/input.js" );
 		wp_enqueue_script('acf-input-rgba_color');
-		
+
 
 		// register & include CSS
-		wp_register_style( 'acf-input-rgba_color', "{$dir}css/input.css" ); 
+		wp_register_style( 'acf-input-rgba_color', "{$dir}css/input.css" );
 		wp_enqueue_style('acf-input-rgba_color');
-		
+
 		wp_enqueue_media();
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/*
 	*  input_admin_head()
 	*
@@ -327,21 +439,21 @@ class acf_field_rgba_color extends acf_field {
 	*/
 
 	/*
-		
+
 	function input_admin_head() {
-	
-		
-		
+
+
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
    	*  input_form_data()
    	*
    	*  This function is called once on the 'input' page between the head and footer
-   	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and 
+   	*  There are 2 situations where ACF did not load during the 'acf/input_admin_enqueue_scripts' and
    	*  'acf/input_admin_head' actions because ACF did not know it was going to be used. These situations are
    	*  seen on comments / user edit forms on the front end. This function will always be called, and includes
    	*  $args that related to the current screen such as $args['post_id']
@@ -353,18 +465,18 @@ class acf_field_rgba_color extends acf_field {
    	*  @param	$args (array)
    	*  @return	n/a
    	*/
-   	
+
    	/*
-   	
+
    	function input_form_data( $args ) {
-	   	
-		
-	
+
+
+
    	}
-   	
+
    	*/
-	
-	
+
+
 	/*
 	*  input_admin_footer()
 	*
@@ -380,16 +492,16 @@ class acf_field_rgba_color extends acf_field {
 	*/
 
 	/*
-		
+
 	function input_admin_footer() {
-	
-		
-		
+
+
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  field_group_admin_enqueue_scripts()
 	*
@@ -405,14 +517,14 @@ class acf_field_rgba_color extends acf_field {
 	*/
 
 	/*
-	
+
 	function field_group_admin_enqueue_scripts() {
-		
+
 	}
-	
+
 	*/
 
-	
+
 	/*
 	*  field_group_admin_head()
 	*
@@ -428,11 +540,11 @@ class acf_field_rgba_color extends acf_field {
 	*/
 
 	/*
-	
+
 	function field_group_admin_head() {
-	
+
 	}
-	
+
 	*/
 
 
@@ -450,18 +562,18 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$value
 	*/
-	
+
 	/*
-	
+
 	function load_value( $value, $post_id, $field ) {
-		
+
 		return $value;
-		
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  update_value()
 	*
@@ -476,18 +588,18 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$value
 	*/
-	
+
 	/*
-	
+
 	function update_value( $value, $post_id, $field ) {
-		
+
 		return $value;
-		
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  format_value()
 	*
@@ -503,35 +615,35 @@ class acf_field_rgba_color extends acf_field {
 	*
 	*  @return	$value (mixed) the modified value
 	*/
-		
+
 	/*
-	
+
 	function format_value( $value, $post_id, $field ) {
-		
+
 		// bail early if no value
 		if( empty($value) ) {
-		
+
 			return $value;
-			
+
 		}
-		
-		
+
+
 		// apply setting
-		if( $field['font_size'] > 12 ) { 
-			
+		if( $field['font_size'] > 12 ) {
+
 			// format the value
 			// $value = 'something';
-		
+
 		}
-		
-		
+
+
 		// return
 		return $value;
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  validate_value()
 	*
@@ -549,13 +661,13 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$input (string) the corresponding input name for $_POST value
 	*  @return	$valid
 	*/
-	
-	
-	
+
+
+
 	function validate_value( $valid, $value, $field, $input ){
-		
+
 			    if ($field['required']) {
-	    
+
 		    	$set = 0;
 		    	$txt = __('The value is empty!! : ','acf-rgba_color');
 
@@ -576,20 +688,20 @@ class acf_field_rgba_color extends acf_field {
 		    			$set = 1;
 		    		}
 		    	}
-		    
+
 		    	if ($set) {
 		    		$valid = $txt;
 		    	}
-		    	
+
 		}
 
 	    return $valid;
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/*
 	*  delete_value()
 	*
@@ -604,18 +716,18 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$key (string) the $meta_key which the value was deleted
 	*  @return	n/a
 	*/
-	
+
 	/*
-	
+
 	function delete_value( $post_id, $key ) {
-		
-		
-		
+
+
+
 	}
-	
+
 	*/
-	
-	
+
+
 	/*
 	*  load_field()
 	*
@@ -623,23 +735,23 @@ class acf_field_rgba_color extends acf_field {
 	*
 	*  @type	filter
 	*  @date	23/01/2013
-	*  @since	3.6.0	
+	*  @since	3.6.0
 	*
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$field
 	*/
-	
+
 	/*
-	
+
 	function load_field( $field ) {
-		
+
 		return $field;
-		
-	}	
-	
+
+	}
+
 	*/
-	
-	
+
+
 	/*
 	*  update_field()
 	*
@@ -652,18 +764,18 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	$field
 	*/
-	
+
 	/*
-	
+
 	function update_field( $field ) {
-		
+
 		return $field;
-		
-	}	
-	
+
+	}
+
 	*/
-	
-	
+
+
 	/*
 	*  delete_field()
 	*
@@ -676,18 +788,18 @@ class acf_field_rgba_color extends acf_field {
 	*  @param	$field (array) the field array holding all the field options
 	*  @return	n/a
 	*/
-	
+
 	/*
-	
+
 	function delete_field( $field ) {
-		
-		
-		
-	}	
-	
+
+
+
+	}
+
 	*/
-	
-	
+
+
 }
 
 // create field

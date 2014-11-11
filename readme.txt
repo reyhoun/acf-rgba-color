@@ -27,6 +27,10 @@ This ACF field type is compatible with:
 
 === Changelog ===
 
+== 1.2.0 ==
+* |Add: @jgraup: multiple methods for changing color and opacity with the keyboard
+* |Add: @jgraup: clear button
+
 == 1.1.0 ==
 * |Add: choices return value
 
