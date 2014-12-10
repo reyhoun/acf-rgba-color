@@ -30,7 +30,24 @@
 			acf.get_fields({ type : 'rgba_color'}, $el).each(function(){
 				
 				initialize_field( $(this) );
-				
+
+				// var colpick = $('.rgba').each( function() {
+    // 			$(this).minicolors({
+    // 			  	defaultValue: '#ff6167',
+    // 			  	inline: false,
+    // 			  	opacity: true,
+    // 			  	change: function(hex, opacity) {
+    // 			  		console.log($(this));
+    // 			    	if(!hex) return;
+    // 			    	text = hex ? hex : 'transparent';
+    // 			    	if( opacity ) text += ', ' + opacity;
+    // 					    text = jQuery(this).minicolors('rgbaString');
+    // 					    console.log($(this).closest('.toping').find('#rgbatext'));
+    // 					    $(this).closest('.toping').find('#rgbatext').val(text);
+    // 					    $(this).closest('.toping').find('#opacity').val(opacity);
+    // 				 	},
+    // 				});
+				// });
 			});
 
 		});
