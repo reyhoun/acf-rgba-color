@@ -254,12 +254,10 @@ class acf_field_rgba_color extends acf_field {
     			  inline: false,
     			  opacity: true,
     			  change: function(hex, opacity) {
-    			  	console.log($(this));
     			    if(!hex) return;
     			    text = hex ? hex : 'transparent';
     			    if( opacity ) text += ', ' + opacity;
     				    text = jQuery(this).minicolors('rgbaString');
-    				    console.log($(this).closest('.toping').find('.rgbatext'));
     				    $(this).closest('.toping').find('.rgbatext').val(text);
     				    $(this).closest('.toping').find('.opacity').val(opacity);
     				  },
@@ -286,7 +284,6 @@ class acf_field_rgba_color extends acf_field {
                     // rgb:    rgb(0,111,222) or (0,111,222)
 
                     parseUserInput = function(evt,el){
-                    	console.log(el)
                         var val = el.val();
                         if(val === '' || val == undefined)
                             return; // no joy
@@ -363,7 +360,6 @@ class acf_field_rgba_color extends acf_field {
     					$(this).keypress(function(evt) {
                     	    // on 'Enter'
                     	    if(evt.which == 13) {
-                    	    	// console.log($(this));
                     	    	var el = $(this);
                     	        evt.preventDefault();
                     	        parseUserInput(evt,el); // magic!
