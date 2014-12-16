@@ -29,7 +29,7 @@ class acf_field_rgba_color extends acf_field {
 		*  label (string) Multiple words, can include spaces, visible when selecting a field type
 		*/
 		
-		$this->label = __('RGBA Color', 'acf-rgba_color');
+		$this->label = __('RGBA Color', 'advanced-custom-fields-rgba-color');
 		
 		
 		/*
@@ -56,7 +56,7 @@ class acf_field_rgba_color extends acf_field {
 		*/
 		
 		$this->l10n = array(
-			'error'	=> __('Error! Please enter a higher value', 'acf-rgba_color'),
+			'error'	=> __('Error! Please enter a higher value', 'advanced-custom-fields-rgba-color'),
 		);
 		
 				
@@ -92,15 +92,15 @@ class acf_field_rgba_color extends acf_field {
 		*/
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __('RGBA color','acf-rgba_color'),
-			'instructions'	=> __('Following this methods for default value: rgba(red, green, blue, alpha)','acf-rgba_color'),
+			'label'			=> __('RGBA color','advanced-custom-fields-rgba-color'),
+			'instructions'	=> __('Following this methods for default value: rgba(red, green, blue, alpha)','advanced-custom-fields-rgba-color'),
 			'type'			=> 'text',
 			'name'			=> 'rgba',
 			
 		));
 
 		acf_render_field_setting( $field, array(
-            'label'         => __('return value ','acf-rgba_color'),
+            'label'         => __('return value ','advanced-custom-fields-rgba-color'),
             'type'          => 'radio',
             'name'          => 'return_value',
             'layout'  =>  'horizontal',
@@ -670,22 +670,22 @@ class acf_field_rgba_color extends acf_field {
 			    if ($field['required']) {
 	    
 		    	$set = 0;
-		    	$txt = __('The value is empty!! : ','acf-rgba_color');
+		    	$txt = __('The value is empty!! : ','advanced-custom-fields-rgba-color');
 
 		    	if ($field['return_value']) {
 		    		if( empty($value['hex'])){
-		    			$txt .= __('hex, ','acf-rgba_color');
+		    			$txt .= __('hex, ','advanced-custom-fields-rgba-color');
 		    			$set = 1;
 		    		}
 
 		    		if( empty($value['opacity'])){
-		    			$txt .= __('opacity, ','acf-rgba_color');
+		    			$txt .= __('opacity, ','advanced-custom-fields-rgba-color');
 		    			$set = 1;
 		    		}
 
 		    	} else {
 		    		if( empty($value)){
-		    			$txt .= __('rgba, ','acf-rgba_color');
+		    			$txt .= __('rgba, ','advanced-custom-fields-rgba-color');
 		    			$set = 1;
 		    		}
 		    	}

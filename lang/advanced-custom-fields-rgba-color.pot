@@ -1,0 +1,58 @@
+# Copyright (C) 2014 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-custom-fields-rgba-"
+"color\n"
+"POT-Creation-Date: 2014-12-16 06:50:05+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: acf-rgba-color-v5.php:32
+msgid "RGBA Color"
+msgstr ""
+
+#: acf-rgba-color-v5.php:59
+msgid "Error! Please enter a higher value"
+msgstr ""
+
+#: acf-rgba-color-v5.php:95
+msgid "RGBA color"
+msgstr ""
+
+#: acf-rgba-color-v5.php:96
+msgid "Following this methods for default value: rgba(red, green, blue, alpha)"
+msgstr ""
+
+#: acf-rgba-color-v5.php:103
+msgid "return value "
+msgstr ""
+
+#: acf-rgba-color-v5.php:108
+msgid "hex and opacity"
+msgstr ""
+
+#: acf-rgba-color-v5.php:109
+msgid "css rgba"
+msgstr ""
+
+#: acf-rgba-color-v5.php:673
+msgid "The value is empty!! : "
+msgstr ""
+
+#: acf-rgba-color-v5.php:677
+msgid "hex, "
+msgstr ""
+
+#: acf-rgba-color-v5.php:682
+msgid "opacity, "
+msgstr ""
+
+#: acf-rgba-color-v5.php:688
+msgid "rgba, "
+msgstr ""

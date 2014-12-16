@@ -9,8 +9,6 @@
  * Author URI: http://reyhoun.com/
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * GitHub Plugin URI: https://github.com/reyhoun/acf-rgba-color
- * GitHub Branch:     master
 */
 
 
@@ -18,7 +16,7 @@
 
 // 1. set text domain
 // Reference: https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
-load_plugin_textdomain( 'acf-rgba_color', false, dirname( plugin_basename(__FILE__) ) . '/lang/' ); 
+load_plugin_textdomain( 'advanced-custom-fields-rgba-color', false, dirname( plugin_basename(__FILE__) ) . '/lang/' ); 
 
 
 
