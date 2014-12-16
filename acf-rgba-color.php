@@ -3,7 +3,7 @@
 /*
  * Plugin Name: Advanced Custom Fields: RGBA Color
  * Plugin URI: https://github.com/reyhoun/acf-rgba-color
- * Description: RGBA Color field type for advanced custom field plugin.
+ * Description: RGBA Color field type for Advanced Custom Field plugin.
  * Version: 1.3.0
  * Author: Reyhoun
  * Author URI: http://reyhoun.com/

@@ -92,7 +92,7 @@ class acf_field_rgba_color extends acf_field {
 		*/
 		
 		acf_render_field_setting( $field, array(
-			'label'			=> __('RGBA color','advanced-custom-fields-rgba-color'),
+			'label'			=> __('RGBA Color','advanced-custom-fields-rgba-color'),
 			'instructions'	=> __('Following this methods for default value: rgba(red, green, blue, alpha)','advanced-custom-fields-rgba-color'),
 			'type'			=> 'text',
 			'name'			=> 'rgba',
@@ -100,7 +100,7 @@ class acf_field_rgba_color extends acf_field {
 		));
 
 		acf_render_field_setting( $field, array(
-            'label'         => __('return value ','advanced-custom-fields-rgba-color'),
+            'label'         => __('Return Value ','advanced-custom-fields-rgba-color'),
             'type'          => 'radio',
             'name'          => 'return_value',
             'layout'  =>  'horizontal',
@@ -670,7 +670,7 @@ class acf_field_rgba_color extends acf_field {
 			    if ($field['required']) {
 	    
 		    	$set = 0;
-		    	$txt = __('The value is empty!! : ','advanced-custom-fields-rgba-color');
+		    	$txt = __('The value is empty! : ','advanced-custom-fields-rgba-color');
 
 		    	if ($field['return_value']) {
 		    		if( empty($value['hex'])){
