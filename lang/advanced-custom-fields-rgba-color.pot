@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version:  \n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/advanced-custom-fields-rgba-"
 "color\n"
-"POT-Creation-Date: 2014-12-16 06:50:05+00:00\n"
+"POT-Creation-Date: 2014-12-16 12:26:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: acf-rgba-color-v5.php:32
+#: acf-rgba-color-v5.php:32 acf-rgba-color-v5.php:95
 msgid "RGBA Color"
 msgstr ""
 
@@ -21,16 +21,12 @@ msgstr ""
 msgid "Error! Please enter a higher value"
 msgstr ""
 
-#: acf-rgba-color-v5.php:95
-msgid "RGBA color"
-msgstr ""
-
 #: acf-rgba-color-v5.php:96
 msgid "Following this methods for default value: rgba(red, green, blue, alpha)"
 msgstr ""
 
 #: acf-rgba-color-v5.php:103
-msgid "return value "
+msgid "Return Value "
 msgstr ""
 
 #: acf-rgba-color-v5.php:108
@@ -42,7 +38,7 @@ msgid "css rgba"
 msgstr ""
 
 #: acf-rgba-color-v5.php:673
-msgid "The value is empty!! : "
+msgid "The value is empty! : "
 msgstr ""
 
 #: acf-rgba-color-v5.php:677
