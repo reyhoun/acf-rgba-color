@@ -1,6 +1,11 @@
 # Changelog
 
 #### 1.3.0
+* update language file
+* remove github updater support
+* better text in readme and plugin
+
+#### 1.3.0
 * fix: use in repeater field.
 
 #### 1.2.0
