@@ -1,6 +1,6 @@
 # Changelog
 
-#### 1.3.0
+#### 1.3.1
 * update language file
 * remove github updater support
 * better text in readme and plugin
