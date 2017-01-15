@@ -29,7 +29,4 @@ function include_field_types_rgba_color( $version ) {
 }
 
 add_action('acf/include_field_types', 'include_field_types_rgba_color');	
-
-
-add_action('acf/register_fields', 'register_fields_rgba_color');	
 ?>
