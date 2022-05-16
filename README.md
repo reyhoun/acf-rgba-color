@@ -1,5 +1,11 @@
 # Advanced Custom Fields: RGBA Color Field
 
+## ⚠️ Important Notice
+
+**This feature has been added to the Color Picker field [(more info)](https://www.advancedcustomfields.com/resources/color-picker/).**
+
+---
+
 RGBA Color field type for advanced custom field.
 
 ## Compatibility
